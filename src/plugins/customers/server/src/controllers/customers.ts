@@ -1,17 +1,14 @@
-import controller from './controller';
-
 import { Context } from 'koa';
 
 export default {
   // Thêm khách hàng
   async create(ctx: Context) {
     try {
-      const { name, email, phone, field, representative } = ctx.request.body;
-      // Gọi service để tạo khách hàng
+      const { Name, Email, Phone, Linh_vuc, Nguoi_dai_dien } = ctx.request.body;
       const customer = await strapi
         .plugin('customers')
         .service('customers')
-        .create({ name, email, phone, field, representative });
+        .create({ Name, Email, Phone, Linh_vuc, Nguoi_dai_dien });
       ctx.send(customer);
     } catch (err: any) {
       ctx.throw(400, err.message);
@@ -22,11 +19,11 @@ export default {
   async update(ctx: Context) {
     try {
       const { id } = ctx.params;
-      const { name, email, phone, field, representative } = ctx.request.body;
+      const { Name, Email, Phone, Linh_vuc, Nguoi_dai_dien } = ctx.request.body;
       const updatedCustomer = await strapi
         .plugin('customers')
         .service('customers')
-        .update({ id }, { name, email, phone, field, representative });
+        .update({ id }, { Name, Email, Phone, Linh_vuc, Nguoi_dai_dien });
       ctx.send(updatedCustomer);
     } catch (err: any) {
       ctx.throw(400, err.message);
@@ -57,16 +54,16 @@ export default {
     }
   },
 
-  // Tìm kiếm khách hàng
+  // Tìm kiếm khách hàng theo các thông tin: Email, Phone, Linh_vuc, Name, Nguoi_dai_dien
   async search(ctx: Context) {
     try {
-      const { email, phone, field, name, representative } = ctx.query;
+      const { Email, Phone, Linh_vuc, Name, Nguoi_dai_dien } = ctx.query;
       const filters: Record<string, any> = {};
-      if (email) filters.email = { $contains: email };
-      if (phone) filters.phone = { $contains: phone };
-      if (field) filters.field = { $contains: field };
-      if (name) filters.name = { $contains: name };
-      if (representative) filters.representative = { $contains: representative };
+      if (Email) filters.Email = { $contains: Email };
+      if (Phone) filters.Phone = { $contains: Phone };
+      if (Linh_vuc) filters.Linh_vuc = { $contains: Linh_vuc };
+      if (Name) filters.Name = { $contains: Name };
+      if (Nguoi_dai_dien) filters.Nguoi_dai_dien = { $contains: Nguoi_dai_dien };
 
       const customers = await strapi
         .plugin('customers')

@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5449:5432"
+    networks:
+      - dcode
+networks:
+  dcode:
+    driver: bridge
+
+volumes:
+  db_data:
+  superset_home:
